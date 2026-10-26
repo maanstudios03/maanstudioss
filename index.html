@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maan Studios — Real Estate Photography</title>
+  <meta name="description" content="Maan Studios — real estate photography, aerial drone, video walkthroughs and twilight that help homes sell faster." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0C0C0C;--text:#D7E2EA;}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Kanit',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:clip}
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    main{overflow-x:clip}
+
+    .hero-heading{background:linear-gradient(180deg,#646973 0%,#bbccd7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .nav-accent{background:linear-gradient(90deg,#b600a8 0%,#7621b0 50%,#be4c00 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+    /* ---- NAV ---- */
+    .nav{position:fixed;inset:0 0 auto 0;z-index:40;transition:background .5s,border-color .5s;border-bottom:1px solid transparent}
+    .nav.scrolled{background:rgba(12,12,14,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom-color:rgba(255,255,255,.1)}
+    .nav__inner{display:flex;align-items:center;justify-content:space-between;padding:20px 24px}
+    @media(min-width:768px){.nav__inner{padding:24px 40px}}
+    .brand{font-weight:900;text-transform:uppercase;letter-spacing:-.01em;font-size:1.5rem;opacity:0;transform:translateY(-6px);transition:opacity .5s,transform .5s;pointer-events:none;display:none}
+    @media(min-width:768px){.brand{display:block}}
+    .nav.scrolled .brand{opacity:1;transform:none;pointer-events:auto}
+    .nav__links{display:flex;align-items:center;flex:1;justify-content:space-between;gap:0;list-style:none}
+    @media(min-width:768px){.nav__links{flex:none;justify-content:flex-end;gap:2.25rem}}
+    .navlink{position:relative;display:block;overflow:hidden;font-weight:500;text-transform:uppercase;letter-spacing:.08em;line-height:1.2;font-size:.875rem}
+    @media(min-width:768px){.navlink{font-size:1.125rem}}
+    @media(min-width:1024px){.navlink{font-size:1.4rem}}
+    .navlink span{display:block;transition:transform .35s cubic-bezier(.22,1,.36,1)}
+    .navlink .base{color:var(--text)}
+    .navlink .accent{position:absolute;left:0;top:100%}
+    .navlink:hover .base,.navlink:hover .accent{transform:translateY(-100%)}
+    .nav__progress{position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#B600A8,#7621B0,#BE4C00)}
+
+    /* ---- HERO ---- */
+    .hero{position:relative;padding:112px 0 40px}
+    @media(min-width:640px){.hero{padding-top:128px}}
+    .hero h1{padding:0 24px;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:1;white-space:nowrap;font-size:clamp(3rem,12vw,220px)}
+    @media(min-width:768px){.hero h1{padding:0 40px}}
+
+    /* ---- MARQUEE ---- */
+    .marquee{background:var(--bg);padding:16px 0 40px;overflow:hidden}
+    @media(min-width:640px){.marquee{padding-top:24px}}
+    @media(min-width:768px){.marquee{padding-top:32px}}
+    .marquee__rows{display:flex;flex-direction:column;gap:12px}
+    .marquee__row{display:flex;gap:12px;width:max-content;will-change:transform}
+    .marquee__row img{width:420px;height:270px;object-fit:cover;border-radius:16px;flex-shrink:0}
+
+    /* ---- SECTIONS ---- */
+    .section-head{font-weight:900;text-transform:uppercase;line-height:1;letter-spacing:-.01em;text-align:center;font-size:clamp(3rem,12vw,160px)}
+
+    /* ---- ABOUT ---- */
+    .about{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px}
+    @media(min-width:768px){.about{padding:80px 40px}}
+    .decor{position:absolute;pointer-events:none}
+    .decor img{width:100%;height:auto}
+    .about__content{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;text-align:center}
+    .about__text{color:var(--text);font-weight:500;line-height:1.6;max-width:560px;margin-top:40px;font-size:clamp(1rem,2vw,1.35rem)}
+    @media(min-width:640px){.about__text{margin-top:56px}}
+
+    /* ---- BUTTONS ---- */
+    .btn-grad{display:inline-block;border:0;cursor:pointer;color:#fff;font-family:inherit;font-weight:500;text-transform:uppercase;letter-spacing:.14em;border-radius:999px;padding:16px 48px;font-size:.9rem;transition:transform .3s;background:linear-gradient(123deg,#18011F 7%,#B600A8 37%,#7621B0 72%,#BE4C00 100%);box-shadow:0 4px 4px rgba(181,1,167,.25),4px 4px 12px #7721B1 inset;outline:2px solid #fff;outline-offset:-3px}
+    .btn-grad:hover{transform:translateY(-2px)}
+    .btn-ghost{display:inline-block;border:2px solid var(--text);color:var(--text);background:transparent;cursor:pointer;font-family:inherit;font-weight:500;text-transform:uppercase;letter-spacing:.14em;border-radius:999px;padding:12px 32px;font-size:.85rem;white-space:nowrap;transition:background .3s}
+    .btn-ghost:hover{background:rgba(215,226,234,.1)}
+    .about__content .btn-grad{margin-top:64px}
+    @media(min-width:768px){.about__content .btn-grad{margin-top:80px}}
+
+    /* ---- SERVICES ---- */
+    .services{background:#fff;border-top-left-radius:40px;border-top-right-radius:40px;padding:80px 20px;position:relative;z-index:10}
+    @media(min-width:768px){.services{border-top-left-radius:60px;border-top-right-radius:60px;padding:128px 40px}}
+    .services h2{color:#0C0C0C;margin-bottom:80px;font-weight:900;text-transform:uppercase;text-align:center;font-size:clamp(3rem,12vw,160px)}
+    @media(min-width:768px){.services h2{margin-bottom:112px}}
+    .services__list{max-width:1024px;margin:0 auto}
+    .service{display:flex;align-items:center;gap:16px;padding:32px 0;border-top:1px solid rgba(12,12,12,.15)}
+    .service:last-child{border-bottom:1px solid rgba(12,12,12,.15)}
+    @media(min-width:640px){.service{gap:32px;padding:48px 0}}
+    .service .num{color:#0C0C0C;font-weight:900;line-height:1;flex-shrink:0;font-size:clamp(3rem,10vw,140px)}
+    .service h3{color:#0C0C0C;font-weight:500;text-transform:uppercase;font-size:clamp(1rem,2.2vw,2.1rem)}
+    .service p{color:#0C0C0C;opacity:.6;font-weight:300;line-height:1.6;max-width:42rem;font-size:clamp(.85rem,1.6vw,1.25rem)}
+
+    /* ---- WORK ---- */
+    .work{background:var(--bg);border-top-left-radius:40px;border-top-right-radius:40px;margin-top:-40px;position:relative;z-index:10;padding:80px 20px}
+    @media(min-width:768px){.work{border-top-left-radius:60px;border-top-right-radius:60px;margin-top:-56px;padding:128px 40px 80px}}
+    .work>h2{margin-bottom:64px}
+    @media(min-width:768px){.work>h2{margin-bottom:96px}}
+    .work-card{height:85vh;display:flex;align-items:flex-start;justify-content:center;position:sticky;top:calc(7rem + var(--i)*28px)}
+    .work-card-inner{width:100%;max-width:72rem;border:2px solid var(--text);background:var(--bg);border-radius:40px;padding:16px;transform-origin:top}
+    @media(min-width:768px){.work-card-inner{border-radius:60px;padding:32px}}
+    .work-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+    @media(min-width:768px){.work-top{margin-bottom:32px}}
+    .work-id{display:flex;align-items:center;gap:16px;min-width:0}
+    @media(min-width:640px){.work-id{gap:24px}}
+    .work-id .num{color:var(--text);font-weight:900;line-height:1;flex-shrink:0;font-size:clamp(2.5rem,7vw,110px)}
+    .work-id .cat{text-transform:uppercase;letter-spacing:.14em;color:rgba(215,226,234,.6);font-size:.75rem}
+    @media(min-width:640px){.work-id .cat{font-size:.875rem}}
+    .work-id h3{color:var(--text);font-weight:500;text-transform:uppercase;font-size:clamp(1rem,2.2vw,2.1rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .work-grid{display:flex;gap:12px;align-items:stretch}
+    .work-grid .col1{width:40%;display:flex;flex-direction:column;gap:12px}
+    .work-grid .col2{width:60%}
+    .work-grid img{width:100%;object-fit:cover;border-radius:40px;cursor:pointer;transition:filter .3s}
+    @media(min-width:768px){.work-grid img{border-radius:60px}}
+    .work-grid img:hover{filter:brightness(1.1)}
+    .work-grid .col1 img:first-child{height:clamp(130px,16vw,230px)}
+    .work-grid .col1 img:last-child{height:clamp(160px,22vw,340px)}
+    .work-grid .col2 img{height:100%}
+    .gallery-cta{position:relative;z-index:20;display:flex;justify-content:center;margin-top:56px}
+    @media(min-width:768px){.gallery-cta{margin-top:80px}}
+
+    /* ---- CONTACT ---- */
+    .contact{background:var(--bg);padding:80px 20px}
+    @media(min-width:768px){.contact{padding:128px 40px}}
+    .contact__wrap{max-width:48rem;margin:0 auto}
+    .contact__sub{text-align:center;color:rgba(215,226,234,.7);font-weight:300;margin:20px auto 0;max-width:36rem;font-size:clamp(1rem,2vw,1.25rem)}
+    form{display:flex;flex-direction:column;gap:16px;margin-top:40px}
+    @media(min-width:640px){form{margin-top:56px}}
+    .field{width:100%;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(215,226,234,.2);color:var(--text);font-family:inherit;padding:16px 20px;font-size:.95rem;transition:border-color .3s}
+    .field::placeholder{color:rgba(215,226,234,.4)}
+    .field:focus{outline:none;border-color:rgba(215,226,234,.6)}
+    textarea.field{resize:none}
+    .form-row{display:grid;gap:16px}
+    @media(min-width:640px){.form-row{grid-template-columns:1fr 1fr}}
+    form .btn-grad{align-self:center;margin-top:8px}
+    .form-status{text-align:center;min-height:1.5rem;font-size:.9rem;margin-top:4px}
+    .form-status.ok{color:#8ad6a0}
+    .form-status.err{color:#e07a6a}
+
+    footer{background:var(--bg);text-align:center;padding:40px 20px;border-top:1px solid rgba(255,255,255,.07)}
+    footer .fbrand{font-weight:900;text-transform:uppercase;font-size:1.4rem}
+    footer p{color:rgba(215,226,234,.5);font-size:.85rem;margin-top:8px}
+
+    /* ---- LIGHTBOX ---- */
+    .lightbox{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(6,7,8,.96);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+    .lightbox.open{opacity:1;visibility:visible}
+    .lightbox img{max-width:90vw;max-height:88vh;width:auto;height:auto;border-radius:24px}
+    .lb-btn{position:absolute;background:none;border:0;color:var(--text);cursor:pointer;line-height:1;transition:opacity .3s}
+    .lb-btn:hover{opacity:.7}
+    .lb-close{top:20px;right:24px;font-size:2.4rem}
+    .lb-prev,.lb-next{top:50%;transform:translateY(-50%);font-size:3.2rem;padding:12px}
+    .lb-prev{left:4px}.lb-next{right:4px}
+    .lb-count{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:rgba(215,226,234,.6);letter-spacing:.2em;font-size:.85rem}
+
+    /* ---- REVEAL ---- */
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+    .reveal.in{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}*{animation:none!important}}
+
+    /* responsive gutters for section heads that sit full-width */
+    .work>h2,.contact .section-head{padding:0 8px}
+  </style>
+</head>
+<body>
+<main>
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#home" class="brand hero-heading">Maan Studios.</a>
+      <ul class="nav__links">
+        <li><a class="navlink" href="#about"><span class="base">About</span><span class="accent nav-accent">About</span></a></li>
+        <li><a class="navlink" href="#services"><span class="base">Services</span><span class="accent nav-accent">Services</span></a></li>
+        <li><a class="navlink" href="#work"><span class="base">Work</span><span class="accent nav-accent">Work</span></a></li>
+        <li><a class="navlink" href="#contact"><span class="base">Contact</span><span class="accent nav-accent">Contact</span></a></li>
+      </ul>
+    </div>
+    <div class="nav__progress" id="navProgress"></div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <h1 class="hero-heading reveal">Maan Studios</h1>
+  </section>
+
+  <!-- MARQUEE -->
+  <section class="marquee" id="marquee">
+    <div class="marquee__rows">
+      <div class="marquee__row" id="row1"></div>
+      <div class="marquee__row" id="row2"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="decor reveal" style="top:4%;left:4%;width:clamp(120px,16vw,210px)"><img src="images/moon.png" alt="" /></div>
+    <div class="decor reveal" style="top:4%;right:4%;width:clamp(120px,16vw,210px)"><img src="images/lego.png" alt="" /></div>
+    <div class="decor reveal" style="bottom:8%;left:10%;width:clamp(100px,13vw,180px)"><img src="images/obj1.png" alt="" /></div>
+    <div class="decor reveal" style="bottom:8%;right:10%;width:clamp(130px,16vw,220px)"><img src="images/obj2.png" alt="" /></div>
+    <div class="about__content">
+      <h2 class="section-head hero-heading reveal">About me</h2>
+      <p class="about__text reveal">We love working with realtors and homeowners to shoot their homes and help them sell faster. From interiors and exteriors to aerial, twilight and video, every property is captured and edited to look its absolute best — and delivered in less than 12 hours.</p>
+      <a href="#contact" class="reveal"><button class="btn-grad">Contact Me</button></a>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <h2>Services</h2>
+    <div class="services__list">
+      <div class="service reveal"><span class="num">01</span><div><h3>Interior &amp; Exterior Photography</h3><p>Magazine-grade stills with professional lighting and flambient blending — bright, true-to-life, and ready to list.</p></div></div>
+      <div class="service reveal"><span class="num">02</span><div><h3>Aerial &amp; Drone</h3><p>FAA-compliant 4K drone photography and aerial video that frames the property, lot lines, and the surrounding neighborhood.</p></div></div>
+      <div class="service reveal"><span class="num">03</span><div><h3>Video Walkthroughs</h3><p>Cinematic walkthrough films and vertical social reels that move buyers through the home before they ever arrive.</p></div></div>
+      <div class="service reveal"><span class="num">04</span><div><h3>Twilight Photography</h3><p>Dramatic dusk and twilight shots with warm interior glow that make a listing stop the scroll and feel premium.</p></div></div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="work" id="work">
+    <h2 class="section-head hero-heading reveal">Work</h2>
+    <div id="workCards">
+      <div class="work-card" style="--i:0">
+        <div class="work-card-inner">
+          <div class="work-top">
+            <div class="work-id"><span class="num">01</span><div><p class="cat">Residential</p><h3>Listing One</h3></div></div>
+            <button class="btn-ghost" data-open="R3170140_1">View Gallery</button>
+          </div>
+          <div class="work-grid">
+            <div class="col1"><img data-file="R3170140_1" src="images/R3170140_1.jpg" alt="Listing One" /><img data-file="R3170140_6" src="images/R3170140_6.jpg" alt="Listing One" /></div>
+            <div class="col2"><img data-file="R3170140_31" src="images/R3170140_31.jpg" alt="Listing One" /></div>
+          </div>
+        </div>
+      </div>
+      <div class="work-card" style="--i:1">
+        <div class="work-card-inner">
+          <div class="work-top">
+            <div class="work-id"><span class="num">02</span><div><p class="cat">Residential</p><h3>Listing Two</h3></div></div>
+            <button class="btn-ghost" data-open="R3177708_1">View Gallery</button>
+          </div>
+          <div class="work-grid">
+            <div class="col1"><img data-file="R3177708_1" src="images/R3177708_1.jpg" alt="Listing Two" /><img data-file="R3177708_4" src="images/R3177708_4.jpg" alt="Listing Two" /></div>
+            <div class="col2"><img data-file="R3177708_2" src="images/R3177708_2.jpg" alt="Listing Two" /></div>
+          </div>
+        </div>
+      </div>
+      <div class="work-card" style="--i:2">
+        <div class="work-card-inner">
+          <div class="work-top">
+            <div class="work-id"><span class="num">03</span><div><p class="cat">Residential</p><h3>Listing Three</h3></div></div>
+            <button class="btn-ghost" data-open="R3170140_23">View Gallery</button>
+          </div>
+          <div class="work-grid">
+            <div class="col1"><img data-file="R3170140_23" src="images/R3170140_23.jpg" alt="Listing Three" /><img data-file="R3170140_35" src="images/R3170140_35.jpg" alt="Listing Three" /></div>
+            <div class="col2"><img data-file="R3170140_36" src="images/R3170140_36.jpg" alt="Listing Three" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-cta reveal">
+      <button class="btn-grad" id="viewGallery">View My Full Gallery Here</button>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact__wrap">
+      <h2 class="section-head hero-heading reveal">Contact</h2>
+      <p class="contact__sub reveal">Tell us about your property and when you need it shot — we&apos;ll get back to you fast.</p>
+      <form id="contactForm" class="reveal">
+        <input class="field" name="name" required placeholder="Name" />
+        <div class="form-row">
+          <input class="field" type="email" name="email" required placeholder="Email" />
+          <input class="field" name="phone" placeholder="Phone (optional)" />
+        </div>
+        <input class="field" name="property" placeholder="Property address (optional)" />
+        <textarea class="field" name="message" rows="5" required placeholder="What do you need? (photos, drone, video, twilight, 3D tour…)"></textarea>
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+        <button type="submit" class="btn-grad" id="submitBtn">Send Message</button>
+        <p class="form-status" id="formStatus" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <a href="#home" class="fbrand hero-heading">Maan Studios.</a>
+    <p>Real estate photography, aerial, video &amp; twilight.</p>
+    <p>© <span id="year"></span> Maan Studios. All rights reserved.</p>
+  </footer>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">×</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <img id="lbImg" src="" alt="" />
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next">›</button>
+  <span class="lb-count" id="lbCount"></span>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var WEB3FORMS_KEY = 'cbd6136b-e070-44ef-9e99-45ac36eaa6d7';
+
+  // ---- photo data ----
+  var files = ['R3170140_1','R3177708_1','R3170140_3','R3177708_2','R3170140_4','R3177708_3','R3170140_6','R3177708_4','R3170140_7','R3177708_5','R3170140_9','R3177708_6','R3170140_10','R3177708_7','R3170140_13','R3177708_8','R3170140_19','R3177708_9','R3170140_23','R3177708_10','R3170140_24','R3177708_11','R3170140_29','R3177708_12','R3170140_31','R3177708_14','R3170140_32','R3177708_15','R3170140_35','R3177708_16','R3170140_36','R3177708_19','R3170140_37','R3177708_20','R3177708_21','R3177708_22','R3177708_23','R3177708_24','R3177708_28','R3177708_30'];
+  var gallery = files.map(function(f){return 'images/'+f+'.jpg';});
+
+  // ---- marquee build ----
+  function tiles(list){return list.map(function(src){return '<img loading="lazy" src="'+src+'" alt="">';}).join('');}
+  var r1 = gallery.slice(0,20), r2 = gallery.slice(20);
+  document.getElementById('row1').innerHTML = tiles(r1.concat(r1,r1));
+  document.getElementById('row2').innerHTML = tiles(r2.concat(r2,r2));
+  var row1El = document.getElementById('row1'), row2El = document.getElementById('row2');
+  var marqueeEl = document.getElementById('marquee');
+
+  // ---- work cards ----
+  var cardWraps = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
+  var cardInners = Array.prototype.slice.call(document.querySelectorAll('.work-card-inner'));
+  var workCards = document.getElementById('workCards');
+  var total = cardWraps.length;
+  function clamp(v){return Math.min(1,Math.max(0,v));}
+
+  // ---- nav ----
+  var nav = document.getElementById('nav');
+  var progress = document.getElementById('navProgress');
+
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    nav.classList.toggle('scrolled', y > 120);
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = 'scaleX(' + (docH>0 ? clamp(y/docH) : 0) + ')';
+
+    // marquee
+    var off = (y - marqueeEl.offsetTop + window.innerHeight) * 0.3;
+    row1El.style.transform = 'translateX(' + (off - 200) + 'px)';
+    row2El.style.transform = 'translateX(' + (-(off - 200)) + 'px)';
+
+    // work card scale
+    var rect = workCards.getBoundingClientRect();
+    var maxScroll = rect.height - window.innerHeight;
+    var p = maxScroll > 0 ? clamp(-rect.top / maxScroll) : 0;
+    for (var i=0;i<cardInners.length;i++){
+      var targetScale = 1 - (total - 1 - i) * 0.03;
+      var r0 = i/total;
+      var t = clamp((p - r0) / (1 - r0));
+      var s = 1 + (targetScale - 1) * t;
+      cardInners[i].style.transform = 'scale(' + s + ')';
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  // ---- reveal ----
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    reveals.forEach(function(el){io.observe(el);});
+  } else { reveals.forEach(function(el){el.classList.add('in');}); }
+
+  // ---- lightbox ----
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var lbCount = document.getElementById('lbCount');
+  var idx = -1;
+  function show(i){ idx = (i + gallery.length) % gallery.length; lbImg.src = gallery[idx]; lbCount.textContent = (idx+1)+' / '+gallery.length; }
+  function openLb(i){ show(i); lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function closeLb(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  document.getElementById('lbPrev').addEventListener('click', function(e){e.stopPropagation(); show(idx-1);});
+  document.getElementById('lbNext').addEventListener('click', function(e){e.stopPropagation(); show(idx+1);});
+  lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
+  lbImg.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') closeLb();
+    if(e.key==='ArrowLeft') show(idx-1);
+    if(e.key==='ArrowRight') show(idx+1);
+  });
+  function fileIndex(f){ return files.indexOf(f); }
+  document.querySelectorAll('.work-grid img').forEach(function(img){
+    img.addEventListener('click', function(){ var i = fileIndex(img.getAttribute('data-file')); openLb(i>=0?i:0); });
+  });
+  document.querySelectorAll('[data-open]').forEach(function(btn){
+    btn.addEventListener('click', function(){ var i = fileIndex(btn.getAttribute('data-open')); openLb(i>=0?i:0); });
+  });
+  document.getElementById('viewGallery').addEventListener('click', function(){ openLb(0); });
+
+  // ---- contact form ----
+  var form = document.getElementById('contactForm');
+  var status = document.getElementById('formStatus');
+  var submitBtn = document.getElementById('submitBtn');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.className = 'form-status';
+    status.textContent = '';
+    submitBtn.textContent = 'Sending…';
+    var data = new FormData(form);
+    data.append('access_key', WEB3FORMS_KEY);
+    data.append('subject', 'New enquiry from the Maan Studios website');
+    data.append('from_name', 'Maan Studios Website');
+    fetch('https://api.web3forms.com/submit', {method:'POST', body:data})
+      .then(function(r){return r.json();})
+      .then(function(j){
+        submitBtn.textContent = 'Send Message';
+        if(j.success){ status.className='form-status ok'; status.textContent="Thanks! Your message has been sent — we'll be in touch soon."; form.reset(); }
+        else { status.className='form-status err'; status.textContent='Something went wrong. Please email maanstudios03@gmail.com.'; }
+      })
+      .catch(function(){ submitBtn.textContent='Send Message'; status.className='form-status err'; status.textContent='Something went wrong. Please email maanstudios03@gmail.com.'; });
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
